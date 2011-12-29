@@ -4,7 +4,10 @@
 	<script src="src/cnsl.js"></script>
 	<script>
 		window.onload = function() {
-			cl = new cnsl({});
+			cnsl = new Cnsl({
+				log:		'examples/externalLogger.php',
+				logtype:	'xhr'
+			});
 		}
 	</script>
 </head>

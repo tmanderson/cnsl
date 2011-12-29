@@ -11,11 +11,8 @@
 				error:	{color:'#F00',weight:'normal',icon:undefined}
 			}
 		},
-		timers = {},
-		icons = {
-			
-		};
-
+		timers = {};
+		console.log(opts);
 		if(opts.log === 'document') {
 			var display = document.createElement('div');
 			display.style.cssText = 'background:#FFF;border-top:2px solid #888;bottom:0;font-family:courier;font-size:.8em;height:20%;left:0;overflow:auto;padding:1em 0;text-indent:2em;position:absolute;width:100%;z-index:9999;';
@@ -27,17 +24,20 @@
 		function write(data) {
 			if(opts.logtype === 'xhr') {
 				var xhr = new XMLHttpRequest(),
-					dataString = '{"type":"' + data.type + '", "text":"' + data.text + '"}';
-				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+					dataString = 'msg={"type":"' + data.type + '", "text":"' + data.text + '"}';
+
 				xhr.open('POST', opts.log, true);
+				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+				
 				xhr.onreadystatechange = function() {
 					if(this.readyState === 4) {
 						if(!/404/g.test(this.status)) {
-							POTP.Events.fire('POTPData', JSON.parse(xhr.responseText));
+							//xhr.responseText
 						}
 					}
 				}
-				xhr.send('msg=' + dataString);
+
+				xhr.send(dataString);
 			} else {
 				var newLog = document.createElement('div'),
 					styles = opts.styles[data.type];
@@ -156,5 +156,5 @@
 		}
 	}
 
-	window.cnsl = Cnsl;
+	window.Cnsl = Cnsl;
 })();
