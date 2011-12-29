@@ -12,7 +12,7 @@
 			}
 		},
 		timers = {};
-		console.log(opts);
+		
 		if(opts.log === 'document') {
 			var display = document.createElement('div');
 			display.style.cssText = 'background:#FFF;border-top:2px solid #888;bottom:0;font-family:courier;font-size:.8em;height:20%;left:0;overflow:auto;padding:1em 0;text-indent:2em;position:absolute;width:100%;z-index:9999;';
@@ -20,7 +20,10 @@
 		}
 
 		//Work in that lame ActiveX object
-		//SocketIO, too
+		//SocketIO, too?
+		//TODO: Add XHR flush fn, so if a butt-ton of logs are written in a short amount of time
+		//		we don't want to try and open up 2304927340918234 connections to the server.
+		//
 		function write(data) {
 			if(opts.logtype === 'xhr') {
 				var xhr = new XMLHttpRequest(),

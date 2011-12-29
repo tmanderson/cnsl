@@ -1,2 +1,5 @@
-log: Testing this outlog: Testing this outwarn: Testing a warningwarn: Testing a warning
+log: Testing this out
+log: Testing this out
+warn: Testing a warning
+warn: Testing a warning
 log: Testing this out
