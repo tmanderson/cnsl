@@ -9,7 +9,8 @@
 				timer:	{color:'#333',weight:'normal',icon:undefined},
 				warn:	{color:'#333',weight:'normal',icon:undefined},
 				error:	{color:'#F00',weight:'normal',icon:undefined}
-			}
+			},
+			jabber_id: opts.jabber_id || undefined
 		},
 		timers = {};
 		
@@ -25,29 +26,60 @@
 		//		we don't want to try and open up 2304927340918234 connections to the server.
 		//
 		function write(data) {
-			if(opts.logtype === 'xhr') {
-				var xhr = new XMLHttpRequest(),
+			switch(opts.logtype){
+				case 'xhr':
+					var xhr = new XMLHttpRequest(),
 					dataString = 'msg={"type":"' + data.type + '", "text":"' + data.text + '"}';
-
-				xhr.open('POST', opts.log, true);
-				xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-				
-				xhr.onreadystatechange = function() {
-					if(this.readyState === 4) {
-						if(!/404/g.test(this.status)) {
-							//xhr.responseText
+	
+					xhr.open('POST', opts.log, true);
+					xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+					
+					xhr.onreadystatechange = function() {
+						if(this.readyState === 4) {
+							if(!/404/g.test(this.status)) {
+								//xhr.responseText
+							}
 						}
 					}
-				}
-
-				xhr.send(dataString);
+	
+					xhr.send(dataString);
+				break;
+				case 'xmpp':
+					if(typeof opts.jabber_id !== undefined){
+						var xhr = new XMLHttpRequest(),
+						dataString = 'msg={"type":"' + data.type + '", "text":"' + data.text + '"}&jid='+opts.jabber_id;
+		
+						xhr.open('POST', opts.log, true);
+						xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+						
+						xhr.onreadystatechange = function() {
+							if(this.readyState === 4) {
+								if(!/404/g.test(this.status)) {
+									//xhr.responseText
+								}
+							}
+						}
+		
+						xhr.send(dataString);
+					} else {
+						console.log('ulskdf');
+					}
+				break;
+				default:
+					var newLog = document.createElement('div'),
+						styles = opts.styles[data.type];
+	
+					newLog.style.cssText = 'color:' + styles.color + ';font-weight:' + styles.weight + ';';
+					newLog.innerHTML = '<img src="data:image/png;base64,' + styles.icon + '" style="position:absolute;left:0;" height="16px" width="16px" /><span style="text-indent:1em;">' + data.text + '</span>';
+					display.appendChild(newLog);
+				break;
+			}
+		
+		
+			if(opts.logtype === 'xhr') {
+				
 			} else {
-				var newLog = document.createElement('div'),
-					styles = opts.styles[data.type];
-
-				newLog.style.cssText = 'color:' + styles.color + ';font-weight:' + styles.weight + ';';
-				newLog.innerHTML = '<img src="data:image/png;base64,' + styles.icon + '" style="position:absolute;left:0;" height="16px" width="16px" /><span style="text-indent:1em;">' + data.text + '</span>';
-				display.appendChild(newLog);
+				
 			}
 
 			return true;

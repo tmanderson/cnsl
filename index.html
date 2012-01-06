@@ -4,12 +4,19 @@
 	<script src="src/cnsl.js"></script>
 	<script>
 		window.onload = function() {
-			cnsl = new Cnsl({
+			cnsl = new Cnsl({});
+			
+			cnsl1 = new Cnsl({
 				log:		'examples/externalLogger.php',
 				logtype:	'xhr'
 			});
-
-			cnsl2 = new Cnsl({});
+			
+			cnsl2 = new Cnsl({
+				log:		'examples/xmpp_logger/index.php',
+				logtype:	'xmpp',
+				jabber_id:	'jbottigliero@jabber.org'
+			});
+			
 		}
 	</script>
 </head>
