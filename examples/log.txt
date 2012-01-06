@@ -3,3 +3,4 @@ log: Testing this out
 warn: Testing a warning
 warn: Testing a warning
 log: Testing this out
+log: test
