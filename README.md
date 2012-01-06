@@ -19,7 +19,8 @@ ___
 ###OPTIONS
         /**
            log: the external server file that handles cnsl JSON. If not included, DOM cnsl will show
-           logType: if not using XHR, no type need be specified
+           logType:	XHR, XMPP, no need to specify!
+           jabber_id: If 'xmpp' log type is set, log messages will be sent to this Jabber account. (Jabber.org support only)
            styles: if default cnsl isn't pretty enough for you
         **/
 
